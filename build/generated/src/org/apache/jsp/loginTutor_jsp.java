@@ -81,7 +81,7 @@ public final class loginTutor_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("        <!-- Modal -->\n");
       out.write("        <form method=\"post\" action=\"loginTutorServlet\">\n");
-      out.write("            <div class=\"modal fade\" id=\"myModal\" role=\"dialog\">\n");
+      out.write("            <div class=\"modal fade\" id=\"myModal\" role=\"dialog\" >\n");
       out.write("                <div class=\"modal-dialog modal-sm\">\n");
       out.write("                    <div class=\"modal-content\">\n");
       out.write("                        <div class=\"modal-header\">\n");

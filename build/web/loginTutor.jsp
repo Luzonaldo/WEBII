@@ -16,27 +16,26 @@
 
         <title>JSP Page</title>
     </head>
-    <body onload="carrega()">
+    <body >
         
     <c:if test="${sessionScope.tutorLogado ne null}">
         <jsp:forward page="/tutor.jsp" />
     </c:if>
 
-        <button class="logar">logar</button>
-        <button class="registrar">registrar</button>
-
-        ${requestScope.msg}
+        
 
         <!-- Modal -->
         <form method="post" action="loginTutorServlet">
-            <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog modal-sm">
+            <div class="modal fade" id="myModal" role="dialog" data-bs-backdrop="static" >
+                <div class="modal-dialog ">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">realizar Login</h4>
+                            <h3 class="modal-title">Bem vindo ao IFPE Dog&Frendis Shop </h3>
                         </div>
-                        <div class="modal-body">
-
+                        <div class="modal-body modal-sm ">
+                            <h4 >realizar Login</h4>
+                            <hr>
+                            <small style="color:red">${requestScope.msg}</small>
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                 <input id="cpf" type="text" class="form-control" name="cpf" placeholder="CPF Tutor">
@@ -48,10 +47,10 @@
                             </div>
 
                         </div>
-                        <div class="modal-footer">
-                            <button id="linkCadastro" type="button" class="btn btn-link"  data-bs-toggle="modal" data-bs-target="#modalCadastro">registrar-se</button>
-                            <button type="submit" class="btn btn-primary" data-dismiss="modal">Logar</button>
-                        </div>
+                            <div class="modal-footer" >
+                                <button id="linkCadastro" type="button" class="btn btn-link " data-bs-toggle="modal" data-bs-target="#modalCadastro">registrar-se</button>
+                                <button type="submit" class="btn btn-primary" data-dismiss="modal">Logar</button>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -61,7 +60,8 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">realizar Login</h4>
+                        <h4 class="modal-title">Registro de Tutor</h4>
+                        
                     </div>
                     <div class="modal-body">
                         <div class="panel panel-default">
@@ -98,7 +98,7 @@
                                     <input id="confirmacao" type="password" class="form-control" name="conf" placeholder="Confirmação da Senha">
                                 </div> 
 
-                                <button type="button" class="btn btn-secondary" data-dismiss="modalCadastro">cancelar</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancelar</button>
                                 <button type="submit" class="btn btn-primary">cadastrar</button>
                             </form>
                         </div>
@@ -113,13 +113,23 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
         <script defer>
 
-        var myModal = new bootstrap.Modal(document.getElementById('myModal'), {
+
+        var htmlModal = document.getElementById('myModal');
+        var htmlModalCadastro = document.getElementById('modalCadastro');
+
+        var myModal = new bootstrap.Modal(htmlModal, {
             keyboard: false
         });
+        
+        
+        
+        htmlModalCadastro.addEventListener("hidden.bs.modal",function(e){
+            myModal.show()
+        })
 
-        function carrega() {
-            myModal.toggle();
-        }
+        
+            myModal.show();
+        
 
         </script>
 

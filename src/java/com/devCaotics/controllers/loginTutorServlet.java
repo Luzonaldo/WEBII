@@ -46,6 +46,8 @@ public class loginTutorServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        response.sendRedirect("loginTutor.jsp");
+    
     }
 
     /**
@@ -67,7 +69,7 @@ public class loginTutorServlet extends HttpServlet {
             request.getSession().invalidate();
             
             getServletContext().getRequestDispatcher("/loginTutor.jsp")
-                .forward(request, response);
+                .include(request, response);
             
             return;
             

@@ -67,6 +67,14 @@ public class Pet {
     public void setTutor(Tutor tutor) {
         this.tutor = tutor;
     }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
     
     
     
