@@ -75,6 +75,7 @@ public class ProdutoServlet extends HttpServlet {
             
             response.sendRedirect("produtos.jsp");
             
+            
             return;
         }
         

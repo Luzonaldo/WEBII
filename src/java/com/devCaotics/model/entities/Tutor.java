@@ -15,6 +15,7 @@ public class Tutor {
     private String nome;
     private String telefone;
     private String endereco;
+    private String senha;
 
     public String getCpf() {
         return cpf;
@@ -46,6 +47,14 @@ public class Tutor {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
     
     

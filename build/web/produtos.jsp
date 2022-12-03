@@ -4,6 +4,7 @@
     Author     : ALUNO
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.devCaotics.model.entities.Produto"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -22,16 +23,13 @@
         <a href="cadastroProduto.jsp">Cadastrar um produto</a></br>
         <a href="index.html">home</a>
         
-        <%
-            String m = (String)session.getAttribute("msg");
+            <h2>${sessionScope.msg}</h2>
             
-            if(m != null){
-        %>
-            <h2><%= m%></h2>
-        <% 
+            <c:remove var="msg" scope="session"/>
+            
+            <% 
                 session.removeAttribute("msg");
-            }
-        %>
+            %>
         
         <% 
             List<Produto> produtos = (List<Produto>)session.getAttribute("listaProdutos");
@@ -47,9 +45,10 @@
             </tr>
             <% 
                 for(Produto p: produtos){
+                    request.setAttribute("p", p);
             %>
                 <tr>
-                    <td><%= p.getCodigo() %></td>
+                    <td>${requestScope.p.codigo}</td>
                     <td><%= p.getNome() %></td>
                     <td><%= p.getMarca() %></td>
                     <td><%= p.getCategoria() %></td>

@@ -20,6 +20,10 @@ public class Produto {
     public int getCodigo() {
         return codigo;
     }
+    
+    public String getAlgumaCoisa(){
+        return "alguma coisa";
+    }
 
     public void setCodigo(int codigo) {
         this.codigo = codigo;
