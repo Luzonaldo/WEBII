@@ -13,6 +13,8 @@
     </head>
     <body>
         <h1>Cadastro de Produtos</h1>
+        <a href="index.html">home</a></br>
+        <a href="ProdutoServlet">Produtos Cadastrados</a>
         <%
             String m = (String)session.getAttribute("msg");
             
@@ -33,6 +35,7 @@
             Observação: <textarea name="obs"></textarea><br/>
             
             <input type="submit" value="Cadastrar"/>
+            
         </form>
         
         

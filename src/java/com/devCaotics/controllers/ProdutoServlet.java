@@ -9,6 +9,7 @@ import com.devCaotics.model.entities.Produto;
 import com.devCaotics.model.repository.ProdutoRepository;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,6 +36,56 @@ public class ProdutoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+        String operacao = request.getParameter("operacao");
+        
+        if(operacao != null && operacao.equals("v")){
+            
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
+            Produto p = ProdutoRepository.getCurrentInstance().read(codigo);
+            
+            request.getSession().setAttribute("produto", p);
+            
+            response.sendRedirect("visualizaProduto.jsp");
+            
+            return;
+            
+        }
+        
+        if(operacao!=null && operacao.equals("a")){
+            
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
+            Produto p = ProdutoRepository.getCurrentInstance().read(codigo);
+            
+            request.setAttribute("produto", p);
+            
+            getServletContext().getRequestDispatcher("/atualizaProduto.jsp")
+                    .forward(request, response);
+            
+            return;
+            
+        }
+        
+        if(operacao!=null && operacao.equals("d")){
+            
+            int codigo = Integer.parseInt(request.getParameter("codigo"));
+            
+            ProdutoRepository.getCurrentInstance().delete(codigo);
+            
+            request.getSession().setAttribute("msg", "Produto deletado com Sucesso!");
+            
+            response.sendRedirect("produtos.jsp");
+            
+            return;
+        }
+        
+        List<Produto> produtos = ProdutoRepository.getCurrentInstance()
+                .readAll();
+        
+        request.getSession().setAttribute("listaProdutos", 
+                produtos);
+        
+        response.sendRedirect("produtos.jsp");
+        
     }
 
     /**
@@ -48,6 +99,10 @@ public class ProdutoServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        String operacao = request.getParameter("op");
+        
+        
         
         int codigo = Integer.parseInt(request.getParameter("codigo"));
         String nome = request.getParameter("nome");
@@ -63,15 +118,34 @@ public class ProdutoServlet extends HttpServlet {
         p.setCategoria(categoria);
         p.setObservacao(obs);
         
-        ProdutoRepository.getCurrentInstance().insert(p);
+        String aux = "";
+        
+        if(operacao != null && operacao.equals("a")){
+            ProdutoRepository.getCurrentInstance().update(p);
+            
+            aux+= "alterado";
+            
+        }else{
+            ProdutoRepository.getCurrentInstance().insert(p);
+            
+            aux+="cadastrado";
+            
+        }
         
         HttpSession session = request.getSession();
         
-        session.setAttribute("msg", "Produto Cadastrado com Sucesso!");
+        session.setAttribute("msg", "Produto "+aux+" com Sucesso!");
         
-        response.sendRedirect("cadastroProduto.jsp");
+        doGet(request, response);
         
     }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        super.doPut(req, resp); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
 
     /**
      * Returns a short description of the servlet.

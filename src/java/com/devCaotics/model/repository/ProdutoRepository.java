@@ -82,5 +82,11 @@ public class ProdutoRepository {
         
     }
     
+    public List<Produto> readAll(){
+        
+        return this.produtos;
+        
+    }
+    
     
 }

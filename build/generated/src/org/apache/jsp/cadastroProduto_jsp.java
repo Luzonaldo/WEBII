@@ -55,11 +55,19 @@ public final class cadastroProduto_jsp extends org.apache.jasper.runtime.HttpJsp
       out.write("        ");
 
             String m = (String)session.getAttribute("msg");
+            
+            if(m != null){
         
       out.write("\n");
-      out.write("        <h2>");
+      out.write("            <h2>");
       out.print( m);
       out.write("</h2>\n");
+      out.write("        ");
+ 
+                session.removeAttribute("msg");
+            }
+        
+      out.write("\n");
       out.write("        \n");
       out.write("        <form method=\"post\" action=\"ProdutoServlet\">\n");
       out.write("            \n");
