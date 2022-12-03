@@ -36,4 +36,14 @@ public class TutorRepository {
         this.tutores.add(t);
     }
     
+    public Tutor buscarPorCPF(String cpf){
+        
+        for(Tutor t: this.tutores){
+            if(t.getCpf().equals(cpf)){
+                return t;
+            }
+        }
+       return null; 
+    }
+    
 }

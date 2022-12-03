@@ -19,8 +19,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author ALUNO
  */
-@WebServlet(name = "TutorServlet", urlPatterns = {"/TutorServlet"})
-public class TutorServlet extends HttpServlet {
+@WebServlet(name = "loginTutorServlet", urlPatterns = {"/loginTutorServlet"})
+public class loginTutorServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,6 +31,9 @@ public class TutorServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
+    
+
+    
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -42,7 +45,7 @@ public class TutorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
     }
 
     /**
@@ -56,43 +59,45 @@ public class TutorServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String cpf = request.getParameter("cpf");
-        String nome = request.getParameter("nome");
-        String telefone = request.getParameter("telefone");
-        String endereco = request.getParameter("endereco");
-        String senha = request.getParameter("senha");
-        String confirmacao = request.getParameter("conf");
-
-        if (!senha.equals(confirmacao)) {
-
-            String msg = "A senha e a confirmação não batem! Cadastro não realizado";
-
-            request.setAttribute("msg", msg);
-
+        
+        String operacao = request.getParameter("op");
+        
+        if(operacao != null){
+            
+            request.getSession().invalidate();
+            
             getServletContext().getRequestDispatcher("/loginTutor.jsp")
-                    .forward(request, response);
-
+                .forward(request, response);
+            
             return;
+            
         }
-
-        Tutor t = new Tutor();
-
-        t.setCpf(cpf);
-        t.setNome(nome);
-        t.setTelefone(telefone);
-        t.setEndereco(endereco);
-        t.setSenha(senha);
-
-        TutorRepository.getCurrentInstance().inserir(t);
-
-        String msg = "Tutor Cadastrado com Sucesso!";
-
-        request.setAttribute("msg", msg);
-
+        
+        String cpf = request.getParameter("cpf");
+        String senha = request.getParameter("senha");
+        
+        Tutor t = TutorRepository.getCurrentInstance().buscarPorCPF(cpf);
+        
+        if(t!=null){
+            
+            if(t.getSenha().equals(senha)){
+                request.getSession().setAttribute("tutorLogado", t);
+                
+                getServletContext().getRequestDispatcher("/tutor.jsp")
+                        .forward(request, response);
+                
+                return;
+                
+            }
+            
+        }
+        
+        request.setAttribute("msg", "Não foi possível realizar o login: "
+                + "A senha ou o CPF estão inválidos");
+        
         getServletContext().getRequestDispatcher("/loginTutor.jsp")
                 .forward(request, response);
-
+        
     }
 
     /**
